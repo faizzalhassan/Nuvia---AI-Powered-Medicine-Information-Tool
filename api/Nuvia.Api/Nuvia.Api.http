@@ -1,0 +1,6 @@
+@Nuvia.Api_HostAddress = http://localhost:5225
+
+GET {{Nuvia.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

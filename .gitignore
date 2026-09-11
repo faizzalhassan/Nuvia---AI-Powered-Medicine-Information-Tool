@@ -1,0 +1,19 @@
+# .NET
+**/bin/
+**/obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Development settings / secrets
+**/appsettings.Development.json
+
+# Angular
+**/node_modules/
+**/dist/
+
+# Environment files
+.env
+.env.*
+!.env.example

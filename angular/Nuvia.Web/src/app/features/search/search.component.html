@@ -1,0 +1,204 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="logo" (click)="goHome()">
+      <div class="logo-icon">N</div>
+      <span class="logo-text">Nuvia</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Page -->
+<div class="page">
+
+  <!-- Search Bar -->
+  <div class="search-wrap">
+    <p class="search-heading">What medicine would you like to understand?</p>
+    <div class="search-bar">
+      <span class="material-icons search-icon">search</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="e.g. Panadol, Ibuprofen, Cravit 250mg..."
+        [(ngModel)]="query"
+        (keyup.enter)="search()" />
+      <button class="search-btn" (click)="search()">
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty / Recent Searches -->
+  @if (!isLoading && !medicine && !errorMessage) {
+    <div class="empty-state">
+      @if (recentSearches.length > 0) {
+        <div class="recent-wrap">
+          <div class="recent-header">
+            <span class="recent-title">Recent Searches</span>
+            <button class="clear-btn" (click)="clearRecent()">Clear all</button>
+          </div>
+          <div class="recent-list">
+            @for (term of recentSearches; track term) {
+              <button class="recent-chip" (click)="searchRecent(term)">
+                <span class="material-icons chip-icon">history</span>
+                {{ term }}
+              </button>
+            }
+          </div>
+        </div>
+      } @else {
+        <div class="empty-hint">
+          <span class="material-icons empty-icon">medication</span>
+          <p class="empty-title">Search for any medicine to get started</p>
+          <p class="empty-sub">Try Panadol, Ibuprofen, Amoxicillin or Cravit</p>
+        </div>
+      }
+    </div>
+  }
+
+ <!-- Loader -->
+@if (isLoading) {
+  <div class="loader-state">
+    <div class="loader-spinner">
+      <div class="spinner-ring"></div>
+    </div>
+    <p class="loader-message">{{ currentMessage }}</p>
+    <p class="loader-sub">Powered by Google Gemini</p>
+  </div>
+}
+
+  <!-- Error -->
+  @if (errorMessage && !isLoading) {
+    <div class="error-state">
+      <span class="material-icons error-icon">error_outline</span>
+      <p class="error-title">{{ errorMessage }}</p>
+      <button class="retry-btn" (click)="search()">
+        <span class="material-icons">refresh</span>
+        Try Again
+      </button>
+    </div>
+  }
+
+  <!-- Medicine Result -->
+  @if (medicine && !isLoading) {
+    <div class="result-wrap">
+
+      <!-- Medicine Header -->
+      <div class="medicine-header">
+        <div class="medicine-header-top">
+          <div>
+            <h1 class="medicine-title">{{ medicine.brandName }}</h1>
+            <p class="medicine-generic">{{ medicine.genericName }}</p>
+          </div>
+          <span class="ai-badge">
+            <span class="material-icons ai-icon">auto_awesome</span>
+            AI Generated
+          </span>
+        </div>
+        <div class="medicine-tags">
+          @if (medicine.strength) {
+            <span class="tag tag-blue">{{ medicine.strength }}</span>
+          }
+          @if (medicine.form) {
+            <span class="tag tag-gray">{{ medicine.form }}</span>
+          }
+          @if (medicine.route) {
+            <span class="tag tag-gray">{{ medicine.route }}</span>
+          }
+          @if (medicine.drugClass) {
+            <span class="tag tag-purple">{{ medicine.drugClass }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- What is it -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span class="material-icons info-icon icon-blue">info</span>
+          <h3 class="info-card-title">What is it?</h3>
+        </div>
+        <p class="info-card-text">{{ medicine.whatIsIt }}</p>
+      </div>
+
+      <!-- Used For -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span class="material-icons info-icon icon-green">check_circle</span>
+          <h3 class="info-card-title">What is it used for?</h3>
+        </div>
+        <div class="pill-list">
+          @for (use of medicine.usedFor; track use) {
+            <span class="pill pill-green">{{ use }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- Side Effects -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span class="material-icons info-icon icon-orange">warning_amber</span>
+          <h3 class="info-card-title">Common Side Effects</h3>
+        </div>
+        <ul class="bullet-list">
+          @for (effect of medicine.sideEffects; track effect) {
+            <li class="bullet-item">
+              <span class="bullet-dot dot-orange"></span>
+              {{ effect }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Warnings -->
+      <div class="info-card info-card-warning">
+        <div class="info-card-header">
+          <span class="material-icons info-icon icon-red">gpp_bad</span>
+          <h3 class="info-card-title warning-title">Warnings</h3>
+        </div>
+        <ul class="bullet-list">
+          @for (warning of medicine.warnings; track warning) {
+            <li class="bullet-item">
+              <span class="bullet-dot dot-red"></span>
+              {{ warning }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Directions -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span class="material-icons info-icon icon-blue">list_alt</span>
+          <h3 class="info-card-title">How to take it?</h3>
+        </div>
+        <ol class="direction-list">
+          @for (direction of medicine.directions; track direction) {
+            <li class="direction-item">{{ direction }}</li>
+          }
+        </ol>
+      </div>
+
+      <!-- Manufacturer -->
+      <div class="info-card info-card-flat">
+        <div class="detail-row">
+          <span class="detail-label">Manufacturer</span>
+          <span class="detail-value">{{ medicine.manufacturer }}</span>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="disclaimer">
+        <span class="material-icons disclaimer-icon">shield</span>
+        <p class="disclaimer-text">{{ medicine.disclaimer }}</p>
+      </div>
+
+      <!-- Source -->
+      <div class="source-footer">
+        <span class="material-icons source-icon">auto_awesome</span>
+        <p class="source-text">Information generated by <strong>Google Gemini</strong> for educational purposes only.</p>
+      </div>
+
+    </div>
+  }
+
+</div>
