@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MedicineService } from '../../core/services/medicine.service';
 import { StorageService } from '../../core/services/storage.service';
-import { MedicineInfo } from '../../shared/models/medicine.model';
+import { MedicineInfo, RelatedVariant } from '../../shared/models/medicine.model';
 
 @Component({
   selector: 'app-search',
@@ -22,12 +22,12 @@ export class SearchComponent implements OnInit, OnDestroy {
   recentSearches: string[] = [];
 
   loaderMessages = [
-    'Searching for medicine information...',
-    'Gathering reliable data...',
-    'Analyzing medicine details...',
-    'Preparing your results...',
-    'Almost there...'
-  ];
+  'Looking up medicine information...',
+  'Analyzing with Google Gemini AI...',
+  'Checking warnings and side effects...',
+  'Preparing your results...',
+  'Almost ready...'
+];
   currentMessage = '';
   private messageInterval: any;
   private messageIndex = 0;
@@ -36,11 +36,20 @@ export class SearchComponent implements OnInit, OnDestroy {
     private medicineService: MedicineService,
     private storageService: StorageService,
     private router: Router,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.recentSearches = this.storageService.getRecentSearches();
+
+    this.route.queryParams.subscribe(params => {
+      const q = params['q'];
+      if (q && q.trim()) {
+        this.query = q.trim();
+        this.search();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -79,6 +88,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     });
   }
 
+  searchVariant(variant: RelatedVariant) {
+    this.query = variant.name;
+    this.search();
+  }
+
   startMessageCycle() {
     this.messageIndex = 0;
     this.currentMessage = this.loaderMessages[0];
@@ -86,7 +100,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.messageIndex = (this.messageIndex + 1) % this.loaderMessages.length;
       this.currentMessage = this.loaderMessages[this.messageIndex];
       this.cdr.detectChanges();
-    }, 2000);
+    }, 1000);
   }
 
   stopMessageCycle() {

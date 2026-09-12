@@ -1,3 +1,9 @@
+export interface RelatedVariant {
+  name: string;
+  form: string;
+  strength: string;
+}
+
 export interface MedicineInfo {
   brandName: string;
   genericName: string;
@@ -11,6 +17,7 @@ export interface MedicineInfo {
   sideEffects: string[];
   warnings: string[];
   directions: string[];
+  relatedVariants: RelatedVariant[];
   disclaimer: string;
   found: boolean;
   notFoundMessage: string;

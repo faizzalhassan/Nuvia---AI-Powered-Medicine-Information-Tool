@@ -1,15 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
+
+  heroQuery = '';
+  typedPlaceholder = '';
+
+  private medicines = ['Panadol', 'Ibuprofen', 'Cravit', 'Daflon'];
+  private medicineIndex = 0;
+  private charIndex = 0;
+  private isDeleting = false;
+  private typeInterval: any;
 
   faqs = [
     {
@@ -77,14 +88,46 @@ export class HomeComponent {
     }
   ];
 
-  stats = [
-    { number: '10,000+', label: 'Medicines Searchable' },
-    { number: 'AI', label: 'Powered by Gemini' },
-    { number: '100%', label: 'Free to Use' },
-    { number: '0', label: 'Account Required' }
-  ];
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  constructor(private router: Router) {}
+  ngOnInit() {
+    this.startTypewriter();
+  }
+
+  ngOnDestroy() {
+    if (this.typeInterval) clearInterval(this.typeInterval);
+  }
+
+  startTypewriter() {
+    this.typeInterval = setInterval(() => {
+      const current = this.medicines[this.medicineIndex];
+
+      if (!this.isDeleting) {
+        this.typedPlaceholder = current.substring(0, this.charIndex + 1);
+        this.charIndex++;
+        if (this.charIndex === current.length) {
+          this.isDeleting = true;
+          setTimeout(() => {}, 1200);
+        }
+      } else {
+        this.typedPlaceholder = current.substring(0, this.charIndex - 1);
+        this.charIndex--;
+        if (this.charIndex === 0) {
+          this.isDeleting = false;
+          this.medicineIndex = (this.medicineIndex + 1) % this.medicines.length;
+        }
+      }
+      this.cdr.detectChanges();
+    }, 120);
+  }
+
+  searchFromHero() {
+    if (!this.heroQuery.trim()) return;
+    this.router.navigate(['/search'], { queryParams: { q: this.heroQuery.trim() } });
+  }
 
   goToSearch() {
     this.router.navigate(['/search']);

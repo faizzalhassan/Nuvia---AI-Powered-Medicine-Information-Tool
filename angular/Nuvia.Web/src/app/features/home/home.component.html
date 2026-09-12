@@ -6,8 +6,11 @@
       <span class="logo-text">Nuvia</span>
     </div>
     <div class="nav-actions">
-      <button class="btn-ghost" (click)="goToSearch()">Get Medicine Info</button>
-      <button class="btn-primary">Download PWA</button>
+      <button class="btn-primary nav-btn" (click)="goToSearch()">Get Medicine Info</button>
+      <button class="btn-ghost nav-btn">Download PWA</button>
+      <div class="nav-avatar">
+        <span class="material-symbols-outlined">person</span>
+      </div>
     </div>
   </div>
 </nav>
@@ -16,17 +19,17 @@
 <div class="stats-bar">
   <div class="stats-bar-inner">
     <div class="stats-bar-item">
-      <span class="material-icons stats-bar-icon">medication</span>
+      <span class="material-symbols-outlined stats-bar-icon icon-fill">verified</span>
       10,000+ Medicines Searchable
     </div>
     <div class="stats-bar-divider"></div>
-    <div class="stats-bar-item">
-      <span class="material-icons stats-bar-icon">auto_awesome</span>
+    <div class="stats-bar-item stats-bar-item-hide">
+      <span class="material-symbols-outlined stats-bar-icon icon-fill">auto_awesome</span>
       Powered by Google Gemini AI
     </div>
-    <div class="stats-bar-divider"></div>
+    <div class="stats-bar-divider stats-bar-divider-hide"></div>
     <div class="stats-bar-item">
-      <span class="material-icons stats-bar-icon">lock_open</span>
+      <span class="material-symbols-outlined stats-bar-icon icon-fill">bolt</span>
       100% Free · No Account Needed
     </div>
   </div>
@@ -34,43 +37,55 @@
 
 <!-- Hero -->
 <section class="hero">
-  <div class="container">
+  <div class="hero-glow"></div>
+  <div class="container hero-inner">
     <div class="hero-badge">
-      <span class="material-icons hero-badge-icon">auto_awesome</span>
+      <span class="material-symbols-outlined hero-badge-icon">auto_awesome</span>
       AI Powered Medicine Information
     </div>
     <h1 class="hero-title">
-      The smarter way to<br/>
-      <span class="hero-highlight">understand</span> your medicine.
+      The smarter way to <span class="hero-highlight">understand</span> your medicine.
     </h1>
     <p class="hero-subtitle">
-      Search any medicine and get clear, simple information —<br/>
-      powered by Google Gemini AI. No jargon. No confusion.
+      Get instant, crystal-clear breakdowns of prescription drugs, over-the-counter medications, side effects, and interactions powered by advanced clinical intelligence.
     </p>
-    <div class="hero-actions">
-      <button class="btn-primary btn-lg" (click)="goToSearch()">
-        <span class="material-icons btn-icon">search</span>
-        Get Medicine Info
-      </button>
-      <button class="btn-outline btn-lg">
-        <span class="material-icons btn-icon">download</span>
-        Download PWA
-      </button>
-    </div>
+    <div class="hero-search">
+  <div class="hero-search-bar">
+    <span class="material-symbols-outlined hero-search-icon">search</span>
+    <input
+      type="text"
+      class="hero-search-input"
+      [placeholder]="typedPlaceholder || 'Search a medicine...'"
+      [(ngModel)]="heroQuery"
+      (keyup.enter)="searchFromHero()" />
+    <button class="hero-search-btn" (click)="searchFromHero()">
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+  </div>
+</div>
 
-    <!-- Trusted By -->
+    <!-- Trusted By Marquee -->
     <div class="trusted-by">
-      <p class="trusted-label">POWERED BY</p>
-      <div class="trusted-list">
-        <span class="trusted-item">Google Gemini</span>
-        <span class="trusted-dot">·</span>
-        <span class="trusted-item">OpenFDA</span>
-        <span class="trusted-dot">·</span>
-        <span class="trusted-item">NIH</span>
-        <span class="trusted-dot">·</span>
-        <span class="trusted-item">WHO</span>
-        <span class="trusted-dot">·</span>
-        <span class="trusted-item">DailyMed</span>
+      <p class="trusted-label">POWERED BY TRUSTED CLINICAL DATABASES &amp; AI</p>
+      <div class="trusted-marquee-wrap">
+        <div class="trusted-fade trusted-fade-left"></div>
+        <div class="trusted-fade trusted-fade-right"></div>
+        <div class="trusted-marquee">
+          <span class="trusted-item">Google Gemini</span>
+          <span class="trusted-item">OpenFDA</span>
+          <span class="trusted-item">NIH MedlinePlus</span>
+          <span class="trusted-item">WHO Essential</span>
+          <span class="trusted-item">DailyMed</span>
+          <span class="trusted-item">Pfizer</span>
+          <span class="trusted-item">Mayo Clinic</span>
+          <span class="trusted-item">Google Gemini</span>
+          <span class="trusted-item">OpenFDA</span>
+          <span class="trusted-item">NIH MedlinePlus</span>
+          <span class="trusted-item">WHO Essential</span>
+          <span class="trusted-item">DailyMed</span>
+          <span class="trusted-item">Pfizer</span>
+          <span class="trusted-item">Mayo Clinic</span>
+        </div>
       </div>
     </div>
   </div>
@@ -80,25 +95,33 @@
 <section class="how-it-works">
   <div class="container">
     <div class="section-header">
-      <p class="section-eyebrow">HOW IT WORKS</p>
-      <h2 class="section-title">Three steps to clarity</h2>
-      <p class="section-subtitle">No medical degree required.</p>
+      <p class="section-eyebrow">WORKFLOW</p>
+      <h2 class="section-title">How It Works</h2>
     </div>
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-num">01</div>
+        <div class="step-icon-wrap">
+          <span class="material-symbols-outlined step-icon">search</span>
+        </div>
         <h3 class="step-title">Search</h3>
-        <p class="step-desc">Type any medicine name — brand or generic. Nuvia finds it instantly.</p>
+        <p class="step-desc">Type any medication name, brand, or active ingredient into the lightning-fast search bar.</p>
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
+        <div class="step-icon-wrap">
+          <span class="material-symbols-outlined step-icon">psychology</span>
+        </div>
         <h3 class="step-title">Understand</h3>
-        <p class="step-desc">Get a clean breakdown — uses, side effects, warnings and directions.</p>
+        <p class="step-desc">Gemini AI synthesizes complex medical jargon into clear, digestible, structured bullet points.</p>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
+        <div class="step-icon-wrap">
+          <span class="material-symbols-outlined step-icon">verified_user</span>
+        </div>
         <h3 class="step-title">Stay Informed</h3>
-        <p class="step-desc">AI-simplified explanations written for people, not doctors.</p>
+        <p class="step-desc">Access interaction checkers, side effect alerts, and dosage guidelines securely on any device.</p>
       </div>
     </div>
   </div>
@@ -108,15 +131,14 @@
 <section class="features">
   <div class="container">
     <div class="section-header">
-      <p class="section-eyebrow">FEATURES</p>
-      <h2 class="section-title">Everything you need. Nothing you don't.</h2>
-      <p class="section-subtitle">Nuvia gives you the right information in the right way.</p>
+      <p class="section-eyebrow">CAPABILITIES</p>
+      <h2 class="section-title">Designed for Complete Clarity</h2>
     </div>
     <div class="features-grid">
       @for (feature of features; track feature.title) {
         <div class="feature-card">
           <div class="feature-icon-wrap">
-            <span class="material-icons feature-icon">{{ feature.icon }}</span>
+            <span class="material-symbols-outlined feature-icon">{{ feature.icon }}</span>
           </div>
           <h3 class="feature-title">{{ feature.title }}</h3>
           <p class="feature-desc">{{ feature.desc }}</p>
@@ -131,12 +153,12 @@
   <div class="container">
     <div class="cta-inner">
       <div class="cta-text">
-        <h2 class="cta-title">Ready to understand your medicine?</h2>
-        <p class="cta-sub">Search any medicine right now — no account, no signup, completely free.</p>
+        <h2 class="cta-title">Ready to understand your medications better?</h2>
+        <p class="cta-sub">Join thousands who rely on Nuvia for rapid, trustworthy medicine info.</p>
       </div>
-      <button class="btn-primary btn-lg" (click)="goToSearch()">
+      <button class="btn-primary btn-lg cta-btn" (click)="goToSearch()">
         Get Medicine Info
-        <span class="material-icons btn-icon-right">arrow_forward</span>
+        <span class="material-symbols-outlined btn-icon-right">arrow_forward</span>
       </button>
     </div>
   </div>
@@ -146,15 +168,15 @@
 <section class="faqs">
   <div class="container-sm">
     <div class="section-header">
-      <p class="section-eyebrow">FAQ</p>
-      <h2 class="section-title">Common questions</h2>
+      <p class="section-eyebrow">SUPPORT</p>
+      <h2 class="section-title">Frequently Asked Questions</h2>
     </div>
     <div class="faq-list">
       @for (faq of faqs; track faq.question; let i = $index) {
         <div class="faq-item">
           <button class="faq-question" (click)="toggleFaq(i)">
             <span>{{ faq.question }}</span>
-            <span class="material-icons faq-icon">{{ faq.open ? 'remove' : 'add' }}</span>
+            <span class="material-symbols-outlined faq-icon">{{ faq.open ? 'remove' : 'add' }}</span>
           </button>
           @if (faq.open) {
             <div class="faq-answer">{{ faq.answer }}</div>
@@ -168,14 +190,41 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="container footer-inner">
-    <div class="logo">
-      <div class="logo-icon logo-icon-sm">N</div>
-      <span class="logo-text">Nuvia</span>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon logo-icon-sm">N</div>
+          <span class="logo-text logo-text-light">Nuvia</span>
+        </div>
+        <p class="footer-tagline">Empowering safe healthcare decisions through clinical intelligence and AI.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">LEGAL &amp; PRIVACY</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Privacy Policy</a></li>
+          <li><a href="#" class="footer-link">Terms of Service</a></li>
+          <li><a href="#" class="footer-link">Medical Disclaimer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">RESOURCES</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">OpenFDA API</a></li>
+          <li><a href="#" class="footer-link">Clinical DB</a></li>
+          <li><a href="#" class="footer-link">Open Source</a></li>
+        </ul>
+      </div>
     </div>
-    <p class="footer-copy">
-      Built by
-      <a href="https://www.linkedin.com/in/faizzal-hassan" target="_blank" class="footer-link">Faizzal Hassan</a>
-      · Open Source · © 2025 Nuvia · Not medical advice.
-    </p>
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        Built by
+        <a href="https://www.linkedin.com/in/faizzal-hassan" target="_blank" class="footer-link-accent">Faizzal Hassan</a>
+        · Open Source · © 2025 Nuvia
+      </p>
+      <span class="footer-warning">Not medical advice</span>
+    </div>
+    <div class="footer-giant">
+      <h1 class="footer-giant-text">NUVIA</h1>
+    </div>
   </div>
 </footer>
