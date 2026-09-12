@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpClient<GeminiService>(client =>
 {
-    client.Timeout = TimeSpan.FromSeconds(15);
+    client.Timeout = TimeSpan.FromSeconds(30);
 });
 
 var app = builder.Build();

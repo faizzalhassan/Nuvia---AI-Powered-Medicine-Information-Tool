@@ -22,23 +22,32 @@ public class MedicinesController : ControllerBase
         if (string.IsNullOrWhiteSpace(query))
             return BadRequest(new { message = "Search query cannot be empty." });
 
-        var rawResponse = await _geminiService.GenerateMedicineInfoAsync(query);
+        var rawResponse = await _geminiService.GetMedicineInfoAsync(query);
 
         if (rawResponse == null)
             return StatusCode(503, new { message = "AI service is temporarily unavailable." });
 
+        Console.WriteLine($"Raw response: {rawResponse}");
+
         try
         {
-            // Clean response — remove markdown code blocks if present
             var cleaned = rawResponse
                 .Replace("```json", "")
                 .Replace("```", "")
                 .Trim();
 
-            var medicineInfo = JsonSerializer.Deserialize<MedicineInfo>(cleaned, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var startIndex = cleaned.IndexOf('{');
+            var lastIndex = cleaned.LastIndexOf('}');
+
+            if (startIndex == -1 || lastIndex == -1)
+                return StatusCode(500, new { message = "Invalid response format." });
+
+            cleaned = cleaned.Substring(startIndex, lastIndex - startIndex + 1);
+
+            var medicineInfo = JsonSerializer.Deserialize<MedicineInfo>(
+                cleaned,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
 
             if (medicineInfo == null)
                 return StatusCode(500, new { message = "Failed to parse medicine information." });
@@ -48,8 +57,9 @@ public class MedicinesController : ControllerBase
 
             return Ok(medicineInfo);
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine($"Parse error: {ex.Message}");
             return StatusCode(500, new { message = "Failed to process medicine information." });
         }
     }
