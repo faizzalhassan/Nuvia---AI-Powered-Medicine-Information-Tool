@@ -5,11 +5,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MedicineService } from '../../core/services/medicine.service';
 import { StorageService } from '../../core/services/storage.service';
 import { MedicineInfo, RelatedVariant } from '../../shared/models/medicine.model';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
@@ -22,15 +23,16 @@ export class SearchComponent implements OnInit, OnDestroy {
   recentSearches: string[] = [];
 
   loaderMessages = [
-  'Looking up medicine information...',
-  'Analyzing with Google Gemini AI...',
-  'Checking warnings and side effects...',
-  'Preparing your results...',
-  'Almost ready...'
-];
+    'Looking up medicine information...',
+    'Analyzing with Google Gemini AI...',
+    'Checking warnings and side effects...',
+    'Preparing your results...',
+    'Almost ready...'
+  ];
   currentMessage = '';
   private messageInterval: any;
   private messageIndex = 0;
+  private lastSearchedQuery = '';
 
   constructor(
     private medicineService: MedicineService,
@@ -45,9 +47,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe(params => {
       const q = params['q'];
-      if (q && q.trim()) {
+      if (q && q.trim() && q.trim() !== this.lastSearchedQuery) {
+        this.lastSearchedQuery = q.trim();
         this.query = q.trim();
-        this.search();
+        this.executeSearch();
       }
     });
   }
@@ -59,6 +62,17 @@ export class SearchComponent implements OnInit, OnDestroy {
   search() {
     if (!this.query.trim()) return;
 
+    this.lastSearchedQuery = this.query.trim();
+
+    this.router.navigate(['/search'], {
+      queryParams: { q: this.query.trim() },
+      queryParamsHandling: 'replace'
+    });
+
+    this.executeSearch();
+  }
+
+  executeSearch() {
     this.isLoading = true;
     this.errorMessage = '';
     this.medicine = null;

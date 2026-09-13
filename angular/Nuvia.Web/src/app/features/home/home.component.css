@@ -1,4 +1,4 @@
-/* ── Base ── */
+/* ── Custom Scrollbar ── */
 :host {
   display: block;
   background: #faf8ff;
@@ -6,6 +6,22 @@
   font-family: 'Inter', sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #faf8ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c3c6d7;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #004ac6;
+}
 .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -79,6 +95,27 @@
   color: #ffffff;
 }
 
+/* ── GitHub Button ── */
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #0F172A;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.github-icon {
+  width: 16px;
+  height: 16px;
+  color: #fff;
+}
 .nav-actions {
   display: flex;
   gap: 8px;

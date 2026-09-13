@@ -11,6 +11,23 @@ body {
   background-color: #F9FAFB;
   color: #111827;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #faf8ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c3c6d7;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #004ac6;
+}
 /* ── Material Symbols Outlined — GLOBAL fix ── */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined' !important;

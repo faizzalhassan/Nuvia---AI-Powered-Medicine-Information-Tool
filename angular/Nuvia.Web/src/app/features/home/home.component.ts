@@ -2,11 +2,13 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewEncapsulation } fr
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
+import { FooterComponent } from '../../shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   encapsulation: ViewEncapsulation.None
@@ -98,7 +100,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.typeInterval) clearInterval(this.typeInterval);
+    this.stopTypewriter();
   }
 
   startTypewriter() {
@@ -110,7 +112,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.charIndex++;
         if (this.charIndex === current.length) {
           this.isDeleting = true;
-          setTimeout(() => {}, 1200);
         }
       } else {
         this.typedPlaceholder = current.substring(0, this.charIndex - 1);
@@ -122,6 +123,26 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       this.cdr.detectChanges();
     }, 120);
+  }
+
+  stopTypewriter() {
+    if (this.typeInterval) {
+      clearInterval(this.typeInterval);
+      this.typeInterval = null;
+    }
+  }
+
+  onInputFocus() {
+    this.stopTypewriter();
+    this.typedPlaceholder = '';
+  }
+
+  onInputBlur() {
+    if (!this.heroQuery.trim()) {
+      this.charIndex = 0;
+      this.isDeleting = false;
+      this.startTypewriter();
+    }
   }
 
   searchFromHero() {

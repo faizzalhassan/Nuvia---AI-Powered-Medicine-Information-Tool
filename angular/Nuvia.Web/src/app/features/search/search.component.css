@@ -1,59 +1,27 @@
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #faf8ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c3c6d7;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #004ac6;
+}
+
 /* ── Base ── */
 :host {
   display: block;
   background: #faf8ff;
   color: #131b2e;
   font-family: 'Inter', sans-serif;
-}
-
-/* ── Navbar (matches home) ── */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background: rgba(250, 248, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(195, 198, 215, 0.15);
-}
-
-.navbar-inner {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 17px 19px;
-  display: flex;
-  align-items: center;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.logo-icon {
-  width: 34px;
-  height: 34px;
-  background: #004ac6;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 800;
-  font-family: 'Syne', sans-serif;
-}
-
-.logo-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: #131b2e;
-  font-family: 'Syne', sans-serif;
-  letter-spacing: -0.02em;
 }
 
 /* ── Page ── */
@@ -74,21 +42,6 @@
   margin: 0 auto;
 }
 
-.search-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #e2e7ff;
-  color: #004ac6;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 7px 16px;
-  border-radius: 999px;
-  margin-bottom: 28px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  letter-spacing: 0.01em;
-}
-
 /* ── Search Hint ── */
 .search-hint {
   font-size: 12px;
@@ -97,71 +50,6 @@
   text-align: center;
 }
 
-/* ── Disambiguation ── */
-.disambiguation-wrap {
-  margin-top: 24px;
-}
-
-.disambiguation-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #0F172A;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.disambiguation-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.option-card {
-  background: #fff;
-  border: 1.5px solid #E2E8F0;
-  border-radius: 14px;
-  padding: 18px 20px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.option-card:hover {
-  border-color: #2563EB;
-  background: #F8FAFF;
-}
-
-.option-card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.option-brand {
-  font-size: 15px;
-  font-weight: 700;
-  color: #0F172A;
-  margin-bottom: 3px;
-}
-
-.option-generic {
-  font-size: 12px;
-  color: #64748B;
-}
-
-.option-arrow {
-  font-size: 18px;
-  color: #94A3B8;
-  flex-shrink: 0;
-}
-
-.option-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
 /* ── Related Variants ── */
 .variants-wrap {
   background: #fff;
@@ -233,6 +121,7 @@
   color: #94A3B8;
   flex-shrink: 0;
 }
+
 /* ── Progress Bar ── */
 .loader-progress {
   width: 200px;
@@ -254,31 +143,6 @@
   0% { width: 0%; }
   90% { width: 85%; }
   100% { width: 90%; }
-}
-
-.badge-icon {
-  font-size: 16px;
-}
-
-/* Matches .hero-title on home */
-.search-heading {
-  font-family: 'Syne', sans-serif;
-  font-size: 56px;
-  font-weight: 700;
-  color: #131b2e;
-  line-height: 64px;
-  letter-spacing: -0.03em;
-  margin: 0 0 24px;
-  max-width: 900px;
-}
-
-/* Matches .hero-subtitle on home */
-.search-sub {
-  font-size: 18px;
-  color: #434655;
-  line-height: 28px;
-  max-width: 640px;
-  margin: 0 0 40px;
 }
 
 /* Search bar */
@@ -350,7 +214,7 @@
   text-align: center;
 }
 
-.empty-hint {
+.empty-hint-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -885,11 +749,6 @@
     grid-template-columns: 1fr;
   }
 
-  .search-heading {
-    font-size: 40px;
-    line-height: 48px;
-  }
-
   .medicine-title {
     font-size: 30px;
     line-height: 38px;
@@ -899,17 +758,6 @@
 @media (max-width: 768px) {
   .page {
     padding: 90px 16px 60px;
-  }
-
-  .search-heading {
-    font-size: 36px;
-    line-height: 42px;
-    letter-spacing: -0.02em;
-  }
-
-  .search-sub {
-    font-size: 16px;
-    line-height: 26px;
   }
 
   .medicine-header {

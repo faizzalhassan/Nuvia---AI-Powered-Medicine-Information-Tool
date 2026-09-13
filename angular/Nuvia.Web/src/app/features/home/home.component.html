@@ -1,19 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar">
-  <div class="navbar-inner">
-    <div class="logo">
-      <div class="logo-icon">N</div>
-      <span class="logo-text">Nuvia</span>
-    </div>
-    <div class="nav-actions">
-      <button class="btn-primary nav-btn" (click)="goToSearch()">Get Medicine Info</button>
-      <button class="btn-ghost nav-btn">Download PWA</button>
-      <div class="nav-avatar">
-        <span class="material-symbols-outlined">person</span>
-      </div>
-    </div>
-  </div>
-</nav>
+ <app-navbar />
 
 <!-- Stats Bar -->
 <div class="stats-bar">
@@ -53,11 +39,13 @@
   <div class="hero-search-bar">
     <span class="material-symbols-outlined hero-search-icon">search</span>
     <input
-      type="text"
-      class="hero-search-input"
-      [placeholder]="typedPlaceholder || 'Search a medicine...'"
-      [(ngModel)]="heroQuery"
-      (keyup.enter)="searchFromHero()" />
+  type="text"
+  class="hero-search-input"
+  [placeholder]="typedPlaceholder || 'Search a medicine...'"
+  [(ngModel)]="heroQuery"
+  (focus)="onInputFocus()"
+  (blur)="onInputBlur()"
+  (keyup.enter)="searchFromHero()" />
     <button class="hero-search-btn" (click)="searchFromHero()">
       <span class="material-symbols-outlined">arrow_forward</span>
     </button>
@@ -187,44 +175,5 @@
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="logo">
-          <div class="logo-icon logo-icon-sm">N</div>
-          <span class="logo-text logo-text-light">Nuvia</span>
-        </div>
-        <p class="footer-tagline">Empowering safe healthcare decisions through clinical intelligence and AI.</p>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-heading">LEGAL &amp; PRIVACY</h4>
-        <ul class="footer-links">
-          <li><a href="#" class="footer-link">Privacy Policy</a></li>
-          <li><a href="#" class="footer-link">Terms of Service</a></li>
-          <li><a href="#" class="footer-link">Medical Disclaimer</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-heading">RESOURCES</h4>
-        <ul class="footer-links">
-          <li><a href="#" class="footer-link">OpenFDA API</a></li>
-          <li><a href="#" class="footer-link">Clinical DB</a></li>
-          <li><a href="#" class="footer-link">Open Source</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">
-        Built by
-        <a href="https://www.linkedin.com/in/faizzal-hassan" target="_blank" class="footer-link-accent">Faizzal Hassan</a>
-        · Open Source · © 2025 Nuvia
-      </p>
-      <span class="footer-warning">Not medical advice</span>
-    </div>
-    <div class="footer-giant">
-      <h1 class="footer-giant-text">NUVIA</h1>
-    </div>
-  </div>
-</footer>
+<!-- footer  -->
+ <app-footer />
