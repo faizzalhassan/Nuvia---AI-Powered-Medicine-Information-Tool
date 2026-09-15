@@ -156,19 +156,31 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 56px 0 32px;
+    padding: 48px 0 24px;
   }
+
+  .container {
+    padding: 0 22px;
+  }
+
   .footer-top {
     grid-template-columns: 1fr;
-    gap: 32px;
-    margin-bottom: 40px;
+    gap: 28px;
+    margin-bottom: 32px;
   }
+
   .footer-bottom {
     flex-direction: column;
     text-align: center;
-    gap: 10px;
+    gap: 8px;
   }
+
+  .footer-giant {
+    margin-top: 32px;
+    overflow: hidden;
+  }
+
   .footer-giant-text {
-    font-size: 28vw;
+    font-size: 16.5vw;
   }
 }
